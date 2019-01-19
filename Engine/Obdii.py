@@ -1,6 +1,5 @@
-import BluetoothDevice
+from Engine.BluetoothDevice import BluetoothDevice
 
-class Obdii extends BluetoothDevice: # must check syntax
+class Obdii (BluetoothDevice): 
 	def __init__(self):
-		# super.__init__()
-		print("obdii initi is empty")
+		super()
