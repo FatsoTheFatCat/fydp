@@ -1,26 +1,23 @@
-import Photo
+from FacialRecognition.Photo import Photo
 
 class PhotoHandler:
-	# overloads
-	# def __init__(self):
-	# def __init__(self, name):
-	def __init__(self, photo):
-		self.photo = photo
+	def __init__(self): #, photo): #should the handler require a photo to exist already?
+		self.photo = Photo()
 		self.exists = False
 		self.numFaces = 0
 		self.valid = False
 
-		exists()
-		validate() # either call this in init or in isValid
+		self.getExistence()
+		self.validate() # either call this in init or in isValid
 
 
 	# Private methods
 	# identifyFaces
 	# sumFaces
-	exists():
+	def getExistence(self):
 		self.exists = False
 
-	validate():
+	def validate(self):
 		# validate that there is one and only one face in the photo
 		# TO DO: next step is to separate testTaker (with mouthpiece) and currentDriver (with steering wheel?)
 		# the complex facial recognition stuff go here

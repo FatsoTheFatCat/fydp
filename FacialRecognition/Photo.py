@@ -1,6 +1,6 @@
 class Photo: # extends built-in file class
-	def __init__(self, name):
-		self.name = name
+	def __init__(self): #, name):
+		self.name = ""#name
 		# file type?
 		# size?
 		# file location?
