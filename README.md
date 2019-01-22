@@ -4,7 +4,7 @@
 - Make sure you have [Python](https://www.python.org/downloads/ "Python"). 
 	- You can run `python --version` or `py --version` in your console to check if you have it installed.
 	- 
-- We're going to hook it up to Arduino. Presumably info on how to do that is on this [link](https://playground.arduino.cc/interfacing/python "Arduino with Python") - TBD.
+- We're going to hook it up to Arduino. Presumably info on how to do that is on this [link](https://playground.arduino.cc/interfacing/python "Arduino with Python") - you'll need pyserial to read the serial info from the Arduino, run `python -m pip install pyserial` to install it
 - Clone the repo: `git clone https://github.com/FatsoTheFatCat/fydp.git`.
 - Create a new development branch: `git branch -b "name-of-new-branch"`.
 	- You may need to set up the reference between your local branch and the remote branch: `git remote add origin https://github.com/user/repo.git`
