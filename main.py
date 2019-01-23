@@ -29,7 +29,9 @@ from GPS.CoordinatesHandler import CoordinatesHandler
 # handler is commonly associated with event handlers (responds to an action)
 # -> instead maybe we can use controller, manager, or modifier
 eh = EngineHandler() # this one specifically might be more fitting to call controller
-
+eh.getEngineStatus()
+eh.turnEngineOn()
+eh.turnEngineOff()
 # Arduino initialization stuff
 
 

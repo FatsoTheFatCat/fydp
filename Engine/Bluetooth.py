@@ -5,20 +5,25 @@ from Engine.BluetoothDevice import BluetoothDevice
 class Bluetooth:
 	def __init__(self):
 		self.connected = False
+		self.device = None
 		# in the language of Arduino (i.e. C)
 		# Serial.begin(9600) # sets the baud rate # not entirely sure this is needed - to be tested
 
 	def findDevice(self, name):
-		print("Finding Bluetooth device")
-		return "device" # will eventually return a BluetoothDevice type
+		print("Finding Bluetooth device: '" + name + "'")
+		# try...except
+		bt = BluetoothDevice()
+		bt.setName("bt")
+		return bt
 
 	def connectToDevice(self, device):
-		print("Connecting to Bluetooth device")
+		print("Connecting to Bluetooth device: '" + device.getName() + "'")
 		# try...except
+		self.device = device
 		self.connected = True
 
 	def setup(self, target):
-		name = target.getName
+		name = target.getName()
 		print(name)
 		device = self.findDevice(name)
 		# also going to need some tight polling here
@@ -28,7 +33,7 @@ class Bluetooth:
 	def send(self, command):
 		# assume that writing in the language of Arduino is
 		# Serial.Write("")
-		print("Sending Bluetooth command")
+		print("Sending Bluetooth command: '" + command + "'")
 
 	def receive(self):
 		# going to need to do some tight polling here
@@ -36,4 +41,5 @@ class Bluetooth:
 		# in the language of Arduino, 
 		# if(Serial.available())
 		#		response = Serial.read()
+		# call on self.device to interpret the response
 		print("Waiting on Bluetooth response")
