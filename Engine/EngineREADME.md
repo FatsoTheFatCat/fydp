@@ -5,12 +5,12 @@ This Engine module handles all functions that are related to accessing the engin
 **All Bluetooth-related files are stored here.** In the event that the idea to use Bluetooth is dropped, the engine files will require less rework.
 
 ## Components
-  |_ engine.ino               -->> effectively the "main" master file used for testing
-    |_ Engine Handler         -->> the gatekeeper to all things engine related
-      |_Engine                -->> virtual representation of the state of the vehicle engine
-        |_ Bluetooth          -->> handles all things Bluetooth related
-          |_ Bluetooth Device -->> virtual representation of the state of a Bluetooth Device
-            |_ OBDii
+		|_ engine.ino               -->> effectively the "main" master file used for testing
+		  |_ Engine Handler         -->> the gatekeeper to all things engine related
+		    |_Engine                -->> virtual representation of the state of the vehicle engine
+		      |_ Bluetooth          -->> handles all things Bluetooth related
+		        |_ Bluetooth Device -->> virtual representation of the state of a Bluetooth Device
+		          |_ OBDii
 
 The theory is that the "main" file will only ever have to see and talk to the Engine Handler. 
 - The Engine Handler handles the relations between the user's goals and the commands sent to the Bluetooth, OBDii, and Engine classes.
