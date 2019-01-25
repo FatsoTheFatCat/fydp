@@ -6,21 +6,28 @@ This Engine module handles all functions that are related to accessing the engin
 
 ## Connection to Arduino
 	HC-05/6			Arduino
-	 RX 	  >>     2
-	 TX 	  >> 	   4
+	 RX 	  >>   TX->1
+	 TX 	  >> 	 RX->0
 	 GND	  >>	  GND
 	 VCC    >>     5V
 
-### Testing the Bluetooth Module
-1. Upload the bluetooth_test sketch onto the Arduino. 
-2. Open the Serial Monitor from the Arduino IDE.
+## Testing the Bluetooth Module
+### Connection to Arduino
+		HC-05/6			Arduino
+		 RX 	  >>     2
+		 TX 	  >> 	   4
+		 GND	  >>	  GND
+		 VCC    >>     5V
+1. Switch the pins for RX and TX to 2 and 4, respectively.
+2. Upload the bluetooth_test sketch onto the Arduino. 
+3. Open the Serial Monitor from the Arduino IDE.
 	* The Baud Rate should be set to 9600.
 	* If the module is an *HC-06*, set the line endings to `No line endings`
 	* If the module is an *HC-05*, set the line endings to `Both NL & CR`
-3. You should see the text: *Type AT commands!*. If not, something is wrong and you need to re-check your set-up.
-4. Type *AT* in the Arduino IDE Serial monitor input field and press the _Send_ button. You should see the response: *OK*. Now you are ready to change the module’s settings!
-5. Type *AT+VERSION* without spaces in the Arduino IDE Serial monitor input field and press the _Send_ button. You should get a response that will have the module name and version, like: *OKlinvorV1.8*.
-6. The module is working as expected!
+4. You should see the text: *Type AT commands!*. If not, something is wrong and you need to re-check your set-up.
+5. Type *AT* in the Arduino IDE Serial monitor input field and press the _Send_ button. You should see the response: *OK*. Now you are ready to change the module’s settings!
+6. Type *AT+VERSION* without spaces in the Arduino IDE Serial monitor input field and press the _Send_ button. You should get a response that will have the module name and version, like: *OKlinvorV1.8*.
+7. The module is working as expected!
 
 
 ## Components
