@@ -10,12 +10,14 @@ class Bluetooth {
 	protected:
 		bool connected;
 		BluetoothDevice device;
+    BluetoothDevice findDevice (char* n);
+    void connectToDevice (BluetoothDevice d);
+    void pairDevice (BluetoothDevice d);
 
   public:
     Bluetooth (void);
-    
-  	BluetoothDevice findDevice (char* n);
-  	void connectToDevice (BluetoothDevice d);
+
+    void findAvailableDevices();
   	void setup (BluetoothDevice t);
   	void send (char* c);
   	bool receive ();

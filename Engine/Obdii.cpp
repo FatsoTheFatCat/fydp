@@ -1,5 +1,6 @@
 #include "Obdii.hpp"
 
+// TO DO: re-evaluate whether defining these is worth it for the deprecated conversion from string to char*
 #define STATUS_INQUIRY "statusInquiry"
 #define OFF_COMMAND "off"
 #define ON_COMMAND "on"

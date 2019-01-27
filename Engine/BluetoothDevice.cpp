@@ -2,6 +2,7 @@
 
 BluetoothDevice::BluetoothDevice (void){
   name = "";
+  address = "";
 }
   
 char* BluetoothDevice::getName () {
@@ -10,4 +11,12 @@ char* BluetoothDevice::getName () {
 
 void BluetoothDevice::setName (char* n) {
 	name = n;
+}
+
+char* BluetoothDevice::getAddress () {
+  return address;
+}
+
+void BluetoothDevice::setAddress (char* a) {
+  address = a;
 }
