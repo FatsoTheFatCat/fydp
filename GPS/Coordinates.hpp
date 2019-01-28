@@ -12,7 +12,7 @@ class Coordinates {
 		Coordinates ();
 		void setLatitude (float lat);
 		float getLatitude ();
-		void setLongitude (float long);
+		void setLongitude (float lon);
 		float getLongitude ();
-}
+};
 #endif

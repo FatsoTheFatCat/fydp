@@ -1,23 +1,24 @@
 #include "CoordinatesHandler.hpp"
 
 CoordinatesHandler::CoordinatesHandler () {
-	coordinates = Coordinates [];
+	coordinates = new Coordinates ();
 	gps = Gps ();
 }
 
-CoordinatesHandler::captureCoordinates () {
+void CoordinatesHandler::captureCoordinates () {
 	// Coordinates c = gps.getCoordinates ();
+ Coordinates c = Coordinates ();
 	coordinates.append (c);
 }
 
-CoordinatesHandler::getAllCoordinates (Coordinates coordinates) {
+Coordinates* CoordinatesHandler::getAllCoordinates (Coordinates coordinates) {
 	return coordinates;
 }
 
-CoordinatesHandler::getCoordinates (int i) {
+Coordinates CoordinatesHandler::getCoordinates (int i) {
 	return coordinates [i];
 }
 
-CoordinatesHandler::getLastCoordinates () {
-	return coordinates [len(coordinates) - 1];
+Coordinates CoordinatesHandler::getLastCoordinates () {
+	return coordinates [sizeof(coordinates) - 1];
 }

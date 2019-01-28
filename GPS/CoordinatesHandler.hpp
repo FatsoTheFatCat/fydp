@@ -8,13 +8,13 @@ using namespace std;
 
 class CoordinatesHandler {
 	protected:
-		Coordinates[] coordinates;
+		Coordinates* coordinates;
 		Gps gps;
 	public:
 		CoordinatesHandler ();
 		void captureCoordinates ();
-		Coordinates getAllCoordinates ();
+		Coordinates* getAllCoordinates ();
 		Coordinates getCoordinates (int i);
 		Coordinates getLastCoordinates ();
-}
+};
 #endif

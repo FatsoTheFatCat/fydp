@@ -11,5 +11,5 @@ class Gps {
 
 	public:
 		Coordinates getCoordinates ();
-}
+};
 #endif
