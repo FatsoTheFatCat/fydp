@@ -10,7 +10,7 @@ class Obdii : public BluetoothDevice {
 		char* name;
 
     Obdii (void);
-  	
+  	char* getName ();
 		char* getStatusInquiry ();
 		char* getOffCommand ();
 		char* getOnCommand ();

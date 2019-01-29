@@ -5,7 +5,7 @@ EngineHandler::EngineHandler (void) {
 	bluetooth = Bluetooth ();
 	obd = Obdii ();
 
-	bluetooth.setup (obd);
+	bluetooth.setup (obd.getName());
 	// for v1, we'll assume that the product does things sequentially
 	// so that the code can just get pumped out
 	// i.e all while loops can stay where they are and where they make sense
@@ -20,8 +20,7 @@ EngineHandler::EngineHandler (void) {
 }
 
 bool EngineHandler::getEngineStatus () {
-  char* statusInquiry = obd.getStatusInquiry();
-	bluetooth.send (statusInquiry);
+	bluetooth.send (obd.getStatusInquiry());
 	// assumes that bluetooth receive returns a bool for now
 	bool engineStatus = bluetooth.receive();
 	// assume somewhere (presumably in Obdii) that the received bluetooth message is interpreted into boolean

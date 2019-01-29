@@ -10,6 +10,10 @@ Obdii::Obdii (void) {
   name = "HH OBD Advanced ELM327";  // or whatever the bluetooth name shows up as
 }
 
+char* Obdii::getName () {
+  return name;
+}
+
 // the following methods return the constant CAN signals that are to be sent to the ECU through Bluetooth
 char* Obdii::getStatusInquiry () {
 	return STATUS_INQUIRY; // the CAN signal required to ask the ECU if the vehicle is on

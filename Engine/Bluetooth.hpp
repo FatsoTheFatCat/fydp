@@ -7,19 +7,19 @@
 using namespace std;
 
 class Bluetooth {
-	protected:
-		bool connected;
-		BluetoothDevice device;
+  protected:
+    bool connected;
+    BluetoothDevice device;
     BluetoothDevice findDevice (char* n);
-    void connectToDevice (BluetoothDevice d);
+    bool connectToDevice (BluetoothDevice d);
     void pairDevice (BluetoothDevice d);
 
   public:
     Bluetooth (void);
 
     void findAvailableDevices();
-  	void setup (BluetoothDevice t);
-  	void send (char* c);
-  	bool receive ();
+    bool setup (char* n);
+    void send (char* c);
+    bool receive ();
 };
 #endif
