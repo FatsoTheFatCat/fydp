@@ -25,6 +25,7 @@ The theory is that the "main" file will only ever have to see and talk to the En
 	 TX     >>   RX->0
 	 GND    >>    GND
 	 VCC    >>    5V
+	 EN     >>    3.3V
 
 ## Testing the Bluetooth Module
 ### Connection to Arduino
@@ -33,10 +34,11 @@ The theory is that the "main" file will only ever have to see and talk to the En
 	 TX     >>     4
 	 GND    >>    GND
 	 VCC    >>    5V
+	 EN     >>    3.3V
 1. Switch the pins for RX and TX to 2 and 4, respectively.
 2. Upload the bluetooth_test sketch onto the Arduino. 
 3. Open the Serial Monitor from the Arduino IDE.
-	* The Baud Rate should be set to 9600.
+	* The Baud Rate should be set to 38400.
 	* If the module is an **HC-06**, set the line endings to `No line endings`
 	* If the module is an **HC-05**, set the line endings to `Both NL & CR`
 4. You should see the text: *Type AT commands!*. If not, something is wrong and you need to re-check your set-up.
