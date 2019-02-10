@@ -8,6 +8,7 @@ using namespace std;
 
 class Bluetooth {
   protected:
+    // Add flags for connected, paired, ready, busy,
     bool connected;
     BluetoothDevice device;
     BluetoothDevice findDevice (char* n);
@@ -20,6 +21,6 @@ class Bluetooth {
     void findAvailableDevices();
     bool setup (char* n);
     void send (char* c);
-    bool receive ();
+    char* receive ();
 };
 #endif

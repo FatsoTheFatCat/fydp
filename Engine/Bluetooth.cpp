@@ -3,8 +3,8 @@
 Bluetooth::Bluetooth (void) {
   connected = false;
 
-  // Set the baud rate
-  Serial.begin(9600); 
+  // Set the baud rate to 38400 if in AT command mode
+  Serial.begin(38400); 
   Serial.write("AT+NAME=DruglessDriving"); 
 }
 
@@ -57,12 +57,22 @@ void Bluetooth::pairDevice (BluetoothDevice d) { // TO DO: figure out if this is
 
 bool Bluetooth::setup (char* n) { 
   int response;
-  // Check for available nearby devices AT+IRQ or AT+INQ
-  Serial.write("AT+IRQ");
+  
+  // Confirm response from command mode
+  Serial.write("AT\r\n");
+  //if (receive()
+
+  Serial.write("AT+INIT\r\n");
+  Serial.write("AT+CMODE=1\r\n"); // might want this to be 0 for a fixed address
+  Serial.write("AT+ROLE=1\r\n");
+  Serial.write("AT+INQ?\r\n");
+  Serial.write(strcat("AT+RNAME?","15,E5,48730\r\n"));
+  Serial.write(strcat(strcat("AT+PAIR=","15,E5,48730"),"48\r\n"));
+  Serial.write(strcat("AT+BIND=","15,E5,48730\r\n"));
+  Serial.write(strcat("AT+LINK=","15,E5,48730\r\n"));
   
   // Check the response for the desired device
-  while(!Serial.available()) {};
-  response = Serial.read();
+  response = receive();
   // interpret response - TO DO after the module arrives
   // if the device can be found in the list
   // TO DO: parse the response for name and address and whatever else
@@ -97,22 +107,20 @@ bool Bluetooth::setup (char* n) {
 
 void Bluetooth::send (char* c) {
 	Serial.write("");
-  printf("Sending Bluetooth command: ");
-  printf(c);
 }
 
 // eventually this will not be a bool but what will it be?
 // I suspect since the Serial.read returns an int that this will be an int
-bool Bluetooth::receive () {
-  char* response;
+char* Bluetooth::receive () {
+  char* response = "";
 	// going to need to do some tight polling here
 	// or somewhere else... probably in main
-	if(Serial.available()) {
-		response = Serial.read();
-    return true;
-	}
+	if (Serial.available()) {
+    while(Serial.available()) { // While there is more to be read, keep reading.
+      response += (char)Serial.read();
+    }
+  }
 	// call on device to interpret the response
-	// return reponse
-  printf("Waiting on Bluetooth response: ");
-  return false;
+
+  return response;
 }
