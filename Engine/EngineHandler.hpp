@@ -9,12 +9,12 @@ using namespace std;
 
 class EngineHandler {
 	protected:
-		Engine engine;
-		Bluetooth bluetooth;
-		Obdii obd;
+		Engine *engine;
+		Bluetooth *bluetooth;
+		Obdii *obd;
 
 	public:
-		EngineHandler ();
+		EngineHandler (SoftwareSerial *BLEserial);
 		bool getEngineStatus ();
 		void turnEngineOn ();
 		void turnEngineOff ();

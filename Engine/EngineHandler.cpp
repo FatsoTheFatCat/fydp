@@ -1,11 +1,11 @@
 #include "EngineHandler.hpp"
 
-EngineHandler::EngineHandler (void) {
-	engine = Engine ();
-	bluetooth = Bluetooth ();
-	obd = Obdii ();
+EngineHandler::EngineHandler (SoftwareSerial *BLEserial) {
+	engine = new Engine ();
+	bluetooth = new Bluetooth (BLEserial);
+	obd = new Obdii ();
 
-	bluetooth.setup (obd.getName());
+	bluetooth->setup (obd->getName());
 	// for v1, we'll assume that the product does things sequentially
 	// so that the code can just get pumped out
 	// i.e all while loops can stay where they are and where they make sense
@@ -20,26 +20,26 @@ EngineHandler::EngineHandler (void) {
 }
 
 bool EngineHandler::getEngineStatus () {
-	bluetooth.send (obd.getStatusInquiry());
+	bluetooth->send (obd->getStatusInquiry());
 	// assumes that bluetooth receive returns a bool for now
-	bool engineStatus = bluetooth.receive();
+	bool engineStatus = bluetooth->receive();
 	// assume somewhere (presumably in Obdii) that the received bluetooth message is interpreted into boolean
-	engine.setOn (engineStatus);
+	engine->setOn (engineStatus);
 
-	return engine.isOn();
+	return engine->isOn();
 }
 
 void EngineHandler::turnEngineOn () {
-  char* onCommand = obd.getOnCommand();
-	bluetooth.send (onCommand);
+  char* onCommand = obd->getOnCommand();
+	bluetooth->send (onCommand);
 	// TO DO: for best practices, we should get a response from the obd to confirm that engine is on
 	// bluetooth.receive();
-	engine.setOn(true);
+	engine->setOn(true);
 }
 
 void EngineHandler::turnEngineOff () {
-  char* offCommand = obd.getOffCommand();
-	bluetooth.send (offCommand);
+  char* offCommand = obd->getOffCommand();
+	bluetooth->send (offCommand);
 	// bluetooth.receive();
-	engine.setOn(false);
+	engine->setOn(false);
 }
