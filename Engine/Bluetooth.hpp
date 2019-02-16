@@ -3,22 +3,27 @@
 
 #include "BluetoothDevice.hpp"
 #include <stdio.h>
+#include <SoftwareSerial.h>
 
 using namespace std;
 
 class Bluetooth {
   protected:
-    // Add flags for connected, paired, ready, busy,
-    bool connected;
+    SoftwareSerial *BLEserial;
+    // bool powered, initialized, cModeSet, roleSet, listed, found, paired, binded, connected, busy;
+    int flag;
+    bool responded, connected;
     BluetoothDevice device;
+
+    bool checkPower ();
+    BluetoothDevice* findAvailableDevices ();
     BluetoothDevice findDevice (char* n);
-    bool connectToDevice (BluetoothDevice d);
     void pairDevice (BluetoothDevice d);
+    bool connectToDevice (BluetoothDevice d);
 
   public:
-    Bluetooth (void);
+    Bluetooth (SoftwareSerial *serial);
 
-    void findAvailableDevices();
     bool setup (char* n);
     void send (char* c);
     char* receive ();
