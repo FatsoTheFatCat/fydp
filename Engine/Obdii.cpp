@@ -1,13 +1,10 @@
 #include "Obdii.hpp"
 
-// TO DO: re-evaluate whether defining these is worth it for the deprecated conversion from string to char*
-#define STATUS_INQUIRY "statusInquiry"
-#define OFF_COMMAND "off"
-#define ON_COMMAND "on"
-
-// #include "BluetoothDevice.h"
 Obdii::Obdii (void) {
-  name = "HH OBD Advanced ELM327";  // or whatever the bluetooth name shows up as
+	// Make and Model: HH OBD Advanced ELM327
+  name = "OBDII";
+  address = "1D,A5,68988D"; // TO DO: probably best to create a class for BluetoothAddress since the delimiter can be a comma or colon
+  deviceClass = "1F00";
 }
 
 char* Obdii::getName () {
