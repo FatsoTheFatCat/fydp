@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 #include <LiquidCrystal.h>
-SoftwareSerial mySerial(4, 2); // RX, TX
+SoftwareSerial obdSerial(3, 2); // RX, TX
+SoftwareSerial dddSerial(5, 4); // drug detection device
 
 String command = ""; // Stores response of the HC-05 Bluetooth device
 int flag = 0, responded = 1;
@@ -16,13 +17,16 @@ int rpm;
 String rpmHexStr;
 String reply;
 
+bool intoxicated = false;
+
 void setup() {
   // Open serial communications:
   Serial.begin(38400);
   //Serial.println("Master!");
   
   // Baud rate for command mode
-  mySerial.begin(38400);
+  obdSerial.begin(38400);
+//  dddSerial.begin(38400);
 
   // set up the LCD's number of columns and rows: 
   lcd.begin(16, 2);
@@ -44,35 +48,35 @@ void loop() {
   if (responded) {
     if (flag == 0) {
       Serial.write("AT\r\n");
-      mySerial.write("AT\r\n");
+      obdSerial.write("AT\r\n");
       responded = 0;
     } else if (flag == 1) {
       Serial.write("AT+ORGL\r\n");
-      mySerial.write("AT+ORGL\r\n");
+      obdSerial.write("AT+ORGL\r\n");
       responded = 0;
     } else if (flag == 2) {
       Serial.write("AT+CMODE=0\r\n");
-      mySerial.write("AT+CMODE=0\r\n");
+      obdSerial.write("AT+CMODE=0\r\n");
       responded = 0;
     } else if (flag == 3) {
       Serial.write("AT+ROLE=1\r\n");
-      mySerial.write("AT+ROLE=1\r\n");
+      obdSerial.write("AT+ROLE=1\r\n");
       responded = 0;
     } else if (flag == 4) {
       Serial.write("AT+BIND=18,E5,48730\r\n");
-      mySerial.write("AT+BIND=18,E5,48730\r\n");
+      obdSerial.write("AT+BIND=18,E5,48730\r\n");
       responded = 0;
     } else if (flag == 5) {
       Serial.write("AT+INIT\r\n");
-      mySerial.write("AT+INIT\r\n");
+      obdSerial.write("AT+INIT\r\n");
       responded = 0;
     } else if (flag == 6) {
       Serial.write("AT+PAIR=18,E5,48730,48\r\n");
-      mySerial.write("AT+PAIR=18,E5,48730,48\r\n");
+      obdSerial.write("AT+PAIR=18,E5,48730,48\r\n");
       responded = 0;
     } else if (flag == 7) {
       Serial.write("AT+LINK=18,E5,48730\r\n");
-      mySerial.write("AT+LINK=18,E5,48730\r\n");
+      obdSerial.write("AT+LINK=18,E5,48730\r\n");
       responded = 0;
     } else if (flag == 8) {
       lcd.clear();
@@ -89,9 +93,15 @@ void loop() {
       lcd.clear();
       lcd.setCursor(0,0);
       lcd.print("Blow into Device");
+      inquiry = "08 0C"; // Want car to be stopped while testing... the problem is the setup before bluetooth is established
+      // This is where we'd check if the user is intoxicated 
       flag++;
     } else if (flag == 10){
-      inquiry = "01 0C";
+      if (intoxicated) {
+        inquiry = "08 0C";
+      } else {
+        inquiry = "01 0C"; // Theoretically, we'd just want to not send the command to set the RPM to 0
+      }
     }
   } else {
     lcd.clear();
@@ -109,9 +119,9 @@ void loop() {
     }
   }
 
-//  if (mySerial.available()) {
-//    while(mySerial.available()) { // While there is more to be read, keep reading.
-//      command += (char)mySerial.read();
+//  if (obdSerial.available()) {
+//    while(obdSerial.available()) { // While there is more to be read, keep reading.
+//      command += (char)obdSerial.read();
 //    }
 //    
 //    Serial.println(command);
@@ -120,10 +130,10 @@ void loop() {
 //    flag++;
 //  }
 
-  if (mySerial.available()) {
+  if (obdSerial.available()) {
     command = ""; // No repeats
-    while(mySerial.available()) { // While there is more to be read, keep reading.
-      command += (char)mySerial.read();
+    while(obdSerial.available()) { // While there is more to be read, keep reading.
+      command += (char)obdSerial.read();
     }
 
     
