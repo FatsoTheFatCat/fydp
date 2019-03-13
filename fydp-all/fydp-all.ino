@@ -33,11 +33,11 @@ void setup() {
  
   //Display Welcome Message
   lcd.setCursor(0, 0);
-  lcd.print("Drugless Driving");
+  lcd.print(F("Drugless Driving"));
   lcd.setCursor(0, 1);
-  lcd.print("Welcome");
+  lcd.print(F("Welcome"));
   delay(1000);
-  lcd.clear();
+//  lcd.clear();
 
   //set up LED
   pinMode(LED, OUTPUT);
@@ -79,42 +79,55 @@ void loop() {
       obdSerial.write("AT+LINK=18,E5,48730\r\n");
       responded = 0;
     } else if (flag == 8) {
-      lcd.clear();
+//      lcd.clear();
       lcd.setCursor(0,0);
-      lcd.print("Connected...    ");
+      lcd.print(F("Connected...    "));
       lcd.setCursor(0, 1);
-      lcd.print("                ");
+      lcd.print(F("                "));
 
       ledOn = false;
       digitalWrite(LED, ledOn);
       delay(1000);
       flag++;
     } else if (flag == 9){
-      lcd.clear();
+//      lcd.clear();
       lcd.setCursor(0,0);
-      lcd.print("Blow into Device");
+      lcd.print(F("Blow into Device"));
+      lcd.setCursor(0, 1);
+      lcd.print(F("                "));
       inquiry = "08 0C"; // Want car to be stopped while testing... the problem is the setup before bluetooth is established
       // This is where we'd check if the user is intoxicated 
+      delay(2000);
       flag++;
     } else if (flag == 10){
       if (intoxicated) {
+//        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print(F("Intoxicated...  "));
+        lcd.setCursor(0,1);
+        lcd.print(F("Engine Shut Off"));
         inquiry = "08 0C";
       } else {
+//        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print(F("Clear to Drive! "));
+        lcd.setCursor(0,1);
+        lcd.print(F("Safe Driving    "));
         inquiry = "01 0C"; // Theoretically, we'd just want to not send the command to set the RPM to 0
       }
     }
   } else {
-    lcd.clear();
+//    lcd.clear();
     lcd.setCursor(0,0);
-    lcd.print("Establishing    ");
+    lcd.print(F("Establishing    "));
     lcd.setCursor(0, 1);
-    lcd.print("Connection...   ");
+    lcd.print(F("Connection...   "));
 
     blinkTime++;
     if (blinkTime > 100){
       blinkTime = 0;
       ledOn = !ledOn;
-      Serial.println("blink");
+//      Serial.println("blink");
       digitalWrite(LED, ledOn);
     }
   }
