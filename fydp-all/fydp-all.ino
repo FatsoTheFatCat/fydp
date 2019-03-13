@@ -18,7 +18,8 @@ String rpmHexStr;
 char rpmHexCharArr[19];
 String reply;
 
-bool intoxicated = false;
+//bool intoxicated = false;
+bool intoxicated = true;
 
 void setup() {
   // Open serial communications:
@@ -108,6 +109,7 @@ void loop() {
         lcd.setCursor(0,1);
         lcd.print(F("Engine Shut Off"));
         inquiry = "08 0C";
+        flag++;
       } else {
 //        lcd.clear();
         lcd.setCursor(0,0);
@@ -116,6 +118,15 @@ void loop() {
         lcd.print(F("Safe Driving    "));
         inquiry = "01 0C"; // Theoretically, we'd just want to not send the command to set the RPM to 0
       }
+    } else if (flag == 11){
+        delay(2000);
+        lcd.setCursor(0,0);
+        lcd.print(F("Are We Wrong?  "));
+        lcd.setCursor(0,1);
+        lcd.print(F("Try Again...   "));
+        delay(2000);
+        flag = 9;
+        inquiry = "";
     }
   } else {
 //    lcd.clear();
@@ -171,7 +182,8 @@ void loop() {
     }
 //    rpmHexStr = String(rpm, HEX);
     reply = F("41 0C ");
-    sprintf(rpmHexCharArr, "%02x %02x %02x %02x", rpm/4/256, rpm/4 % 256, 0, 0);
+//    sprintf(rpmHexCharArr, "%02x %02x %02x %02x", rpm/4/256, rpm/4 % 256, 0, 0);
+    sprintf(rpmHexCharArr, "%02x %02x", rpm/4/256, rpm/4 % 256);
     reply.concat(rpmHexCharArr);
     reply.toUpperCase();
     Serial.println(reply);
