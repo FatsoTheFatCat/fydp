@@ -15,6 +15,7 @@ bool blinkTime = true;
 String inquiry = "";
 int rpm;
 String rpmHexStr;
+char rpmHexCharArr[19];
 String reply;
 
 bool intoxicated = false;
@@ -168,11 +169,15 @@ void loop() {
     } else if (inquiry == "08 0C") {
       rpm = 0;
     }
-    rpmHexStr = String(rpm, HEX);
-    reply = "41 0C ";
-    reply.concat(rpmHexStr);
+//    rpmHexStr = String(rpm, HEX);
+    reply = F("41 0C ");
+    sprintf(rpmHexCharArr, "%02x %02x %02x %02x", rpm/4/256, rpm/4 % 256, 0, 0);
+    reply.concat(rpmHexCharArr);
+    reply.toUpperCase();
     Serial.println(reply);
 //      lcd.setCursor(0,1);
 //      lcd.print(reply);
   }
 }
+
+
