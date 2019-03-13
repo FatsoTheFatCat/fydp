@@ -11,6 +11,11 @@ const int LED = 6;
 int ledOn = 1;
 bool blinkTime = true;
 
+String inquiry = "";
+int rpm;
+String rpmHexStr;
+String reply;
+
 void setup() {
   // Open serial communications:
   Serial.begin(38400);
@@ -85,6 +90,8 @@ void loop() {
       lcd.setCursor(0,0);
       lcd.print("Blow into Device");
       flag++;
+    } else if (flag == 10){
+      inquiry = "01 0C";
     }
   } else {
     lcd.clear();
@@ -94,9 +101,10 @@ void loop() {
     lcd.print("Connection...   ");
 
     blinkTime++;
-    if (blinkTime > 1000){
+    if (blinkTime > 100){
       blinkTime = 0;
       ledOn = !ledOn;
+      Serial.println("blink");
       digitalWrite(LED, ledOn);
     }
   }
@@ -112,16 +120,36 @@ void loop() {
 //    flag++;
 //  }
 
-  if (Serial.available()) {
-    while(Serial.available()) { // While there is more to be read, keep reading.
-      command += (char)Serial.read();
+  if (mySerial.available()) {
+    command = ""; // No repeats
+    while(mySerial.available()) { // While there is more to be read, keep reading.
+      command += (char)mySerial.read();
     }
+
+    
 
 //    lcd.clear();
 //    lcd.setCursor(0,0);
 //    lcd.print(command);
-    command = ""; // No repeats
     responded = 1;
     flag++;
+  }
+  
+  if (inquiry.length() > 0){
+    Serial.println(inquiry);
+//      lcd.clear();
+//      lcd.setCursor(0,0);
+//      lcd.print(inquiry);
+    if (inquiry == "01 0C") {
+      rpm = 4 * random(0, 8191);
+    } else if (inquiry == "08 0C") {
+      rpm = 0;
+    }
+    rpmHexStr = String(rpm, HEX);
+    reply = "41 0C ";
+    reply.concat(rpmHexStr);
+    Serial.println(reply);
+//      lcd.setCursor(0,1);
+//      lcd.print(reply);
   }
 }
